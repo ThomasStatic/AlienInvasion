@@ -10,7 +10,7 @@ class Settings:
 		self.bg_colour = (75, 0, 130)
 
 		# Ship settings
-		self.ship_speed = 0.85
+		self.ship_speed = 0.70
 
 		# Bullet settings
 		self.bullet_speed = 1.0
