@@ -43,6 +43,7 @@ class AlienInvasion:
 		while True:
 			self._check_events()
 			self.ship.update()
+			self._update_aliens()
 			self._update_bullets()
 			self._update_screen()
 
@@ -122,6 +123,10 @@ class AlienInvasion:
 			if bullet.rect.bottom <= 0:
 				self.bullets.remove(bullet)
 
+	def _update_aliens(self):
+		"""Update position of aliens"""
+		self.aliens.update()
+
 	def _create_fleet(self):
 		"""Create a fleet of aliens"""
 
@@ -145,15 +150,6 @@ class AlienInvasion:
 				# Create an alien and place it in the row
 				self._create_alien(alien_number, row_number)
 
-	def _create_alien(self, alien_number, row_number):
-		"""Create an alien and place it in the row"""
-		alien = Alien(self)
-		alien_width, alien_height = alien.rect.size
-		alien.x = alien_width + 2 * alien_width * alien_number
-		alien.rect.x = alien.x
-		alien.rect.y = alien_height + 2 * alien.rect.height * row_number
-		self.aliens.add(alien)
-
 	def _create_stars(self):
 		"""Create all the background stars"""
 
@@ -163,7 +159,9 @@ class AlienInvasion:
 		star_width, star_height = star.rect.size
 		available_space_x = 1300 - (2*star_width)
 		number_stars_x = available_space_x // (2*star_width)
-		available_space_y = self.settings.screen_height - 2 * star_height
+
+		ship_height = self.ship.rect.height
+		available_space_y = (self.settings.screen_height - (3 * star_height) - ship_height)
 		number_rows = available_space_y//(2*star_height)
 
 		# Create all the stars
@@ -173,20 +171,26 @@ class AlienInvasion:
 				# Create a star and place it in the row
 				self._create_star(star_number, row_number)
 
+
+	def _create_alien(self, alien_number, row_number):
+		"""Create an alien and place it in the row"""
+		alien = Alien(self)
+		alien_width, alien_height = alien.rect.size
+		alien.x = alien_width + 2 * alien_width * alien_number
+		alien.rect.x = alien.x
+		alien.rect.y = alien_height + 2 * alien.rect.height * row_number
+		self.aliens.add(alien)
+
+
 	def _create_star(self, star_number, row_number):
 		"""Create a star and place it in the row"""
 		star = Star(self)
 		star_width, star_height = star.rect.size
 		star.x = star_width + 2 * star_width * star_number
 		star.rect.x = star.x
-		star.rect.y = star_height + 2 * star.rect.height * star_number
+		star.rect.y = star_height + 2 * star.rect.height * row_number
 		self.stars.add(star)
 		
-
-
-
-
-
 
 	def _update_screen(self):
 		"""Update images on the screen, and flip to the new screen"""
