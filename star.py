@@ -1,5 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
+from random import randint
 
 class Star(Sprite):
 	"""A class to manage stars to add background ambience"""
@@ -18,8 +19,8 @@ class Star(Sprite):
 		self.rect = self.image.get_rect()
 
 		# Start each new star near the top left of the screen
-		self.rect.x = self.rect.width
-		self.rect.y = self.rect.height
+		self.rect.x = randint(self.rect.width, 60)
+		self.rect.y = randint(self.rect.height, 70)
 
 		# Store the star's exact horizontal postion
 		self.x = float(self.rect.x)

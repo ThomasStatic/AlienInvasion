@@ -7,7 +7,7 @@ from ship import Ship
 from bullet import Bullet
 from alien import Alien
 from star import Star
-
+from random import randint
 
 class AlienInvasion:
 	"""Overall class to manage game assets and behaviors"""
@@ -124,7 +124,11 @@ class AlienInvasion:
 				self.bullets.remove(bullet)
 
 	def _update_aliens(self):
-		"""Update position of aliens"""
+		"""
+		Check if the fleet is at an edge,
+		then update the positions of all aliens in the fleet.
+		"""
+		self._check_fleet_edges()
 		self.aliens.update()
 
 	def _create_fleet(self):
@@ -161,7 +165,7 @@ class AlienInvasion:
 		number_stars_x = available_space_x // (2*star_width)
 
 		ship_height = self.ship.rect.height
-		available_space_y = (self.settings.screen_height - (3 * star_height) - ship_height)
+		available_space_y = (self.settings.screen_height - (randint(1,3) * star_height) - ship_height)
 		number_rows = available_space_y//(2*star_height)
 
 		# Create all the stars
@@ -181,14 +185,27 @@ class AlienInvasion:
 		alien.rect.y = alien_height + 2 * alien.rect.height * row_number
 		self.aliens.add(alien)
 
+	def _check_fleet_edges(self):
+		"""Respond appropriately if any aliens have reached an edge"""
+		for alien in self.aliens.sprites():
+			if alien.check_edges():
+				self._change_fleet_direction()
+			break
+
+	def _change_fleet_direction(self):
+		"""Drop the entire fleet and change the fleet's direction"""
+		for alien in self.aliens.sprites():
+			alien.rect.y += self.settings.fleet_drop_speed
+		self.settings.fleet_direction *= -1
+
 
 	def _create_star(self, star_number, row_number):
 		"""Create a star and place it in the row"""
 		star = Star(self)
 		star_width, star_height = star.rect.size
-		star.x = star_width + 2 * star_width * star_number
+		star.x = star_width + randint(2, 4) * star_width * star_number
 		star.rect.x = star.x
-		star.rect.y = star_height + 2 * star.rect.height * row_number
+		star.rect.y = star_height + randint(2,5) * star.rect.height * row_number
 		self.stars.add(star)
 		
 
@@ -197,13 +214,14 @@ class AlienInvasion:
 
 		# Redraw the screen during each pass
 		self.screen.fill(self.settings.bg_colour)
-		self.ship.blitme()
+		
 
-		# Draw the bullets and aliens
-		for bullet in self.bullets.sprites():
-			bullet.draw_bullet()
+		
 		self.stars.draw(self.screen)
 		self.aliens.draw(self.screen)
+		for bullet in self.bullets.sprites():
+			bullet.draw_bullet()
+		self.ship.blitme()
 
 
 		# Make the most recently drawn screen visible
