@@ -15,7 +15,7 @@ class Alien(Sprite):
 		self.settings = ai_game.settings
 
 		# Load the alien and set its rect attribute
-		self.image = pygame.image.load('Images/alien.bmp')
+		self.image = pygame.image.load("C:/Users/Thomas/OneDrive - Queen's University/Documents/GitHub/Alien Invasion/Images/alien.bmp")
 		self.rect = self.image.get_rect()
 
 		# Start each new alien near the top left of the screen

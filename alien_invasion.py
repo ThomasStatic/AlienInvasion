@@ -8,6 +8,7 @@ from bullet import Bullet
 from alien import Alien
 from star import Star
 from random import randint
+from rain_drop import Rain_Drop
 
 class AlienInvasion:
 	"""Overall class to manage game assets and behaviors"""
@@ -33,9 +34,11 @@ class AlienInvasion:
 		self.bullets = pygame.sprite.Group()
 		self.aliens = pygame.sprite.Group()
 		self.stars = pygame.sprite.Group()
+		#self.rain_drops = pygame.sprite.Group()
 
 		self._create_stars()
 		self._create_fleet()
+
 		
 
 	def run_game(self):
@@ -153,6 +156,10 @@ class AlienInvasion:
 			for alien_number in range(number_aliens_x):
 				# Create an alien and place it in the row
 				self._create_alien(alien_number, row_number)
+
+	# def _create_rain_drops(self):
+	# 	"""Create all the rain drops"""
+	# 	rain_drop = Rain_Drop(self)
 
 	def _create_stars(self):
 		"""Create all the background stars"""

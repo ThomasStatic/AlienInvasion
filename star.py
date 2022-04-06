@@ -15,11 +15,11 @@ class Star(Sprite):
 		self.screen = ai_game.screen
 		
 		# Load the image and set its rect attributes
-		self.image = pygame.image.load('Images/star_resized.bmp')
+		self.image = pygame.image.load("C:/Users/Thomas/OneDrive - Queen's University/Documents/GitHub/Alien Invasion/Images/star.bmp")
 		self.rect = self.image.get_rect()
 
 		# Start each new star near the top left of the screen
-		self.rect.x = randint(self.rect.width, 60)
+		self.rect.x = randint(self.rect.width, 50)
 		self.rect.y = randint(self.rect.height, 70)
 
 		# Store the star's exact horizontal postion
