@@ -1,2 +1,2 @@
 # AlienInvasion
-Coding through Python CrashCourse
+This is a program made via following a PyGame Python tutorial
